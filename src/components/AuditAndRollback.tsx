@@ -5,10 +5,12 @@ import { AuditEntry } from '../types';
 
 interface AuditAndRollbackProps {
   onRollback: (ruleId: string, version: number) => void;
+  onNavigateTab?: (tab: string) => void;
 }
 
 export const AuditAndRollback: React.FC<AuditAndRollbackProps> = ({
-  onRollback
+  onRollback,
+  onNavigateTab
 }) => {
   const [entries] = useState<AuditEntry[]>(AUDIT_LOG);
   const [rollbackTarget, setRollbackTarget] = useState<string | null>(null);

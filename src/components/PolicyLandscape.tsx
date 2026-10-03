@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Eye, Plus, Sparkles, Edit3 } from 'lucide-react';
+import { Eye, Plus, Sparkles, Edit3, X } from 'lucide-react';
 import { SpendRule, RuleStatus, UserRole } from '../types';
 
 interface PolicyLandscapeProps {

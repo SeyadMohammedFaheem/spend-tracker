@@ -38,7 +38,7 @@ export const RuleBuilder: React.FC<RuleBuilderProps> = ({
   const [ruleTitle, setRuleTitle] = useState<string>('Engineering Software Purchases > ₹50,000');
   const [isEditingTitle] = useState<boolean>(false);
   const [ruleDescription, setRuleDescription] = useState<string>('');
-  const [domain, setDomain] = useState<PolicyDomain>('SOFTWARE');
+  const [domain, setDomain] = useState<PolicyDomain>('SOFTWARE_AND_IT');
 
   const [departments, setDepartments] = useState<string[]>(['Engineering']);
   const [amountOperator, setAmountOperator] = useState<RuleConditions['amountOperator']>('GREATER_THAN');
@@ -314,13 +314,13 @@ export const RuleBuilder: React.FC<RuleBuilderProps> = ({
     // Determine domain
     let detectedDomain: PolicyDomain = 'GENERAL';
     if (detectedCategories.some(c => c.includes('Software') || c.includes('SaaS') || c.includes('Developer'))) {
-      detectedDomain = 'SOFTWARE';
+      detectedDomain = 'SOFTWARE_AND_IT';
     } else if (detectedCategories.some(c => c.includes('Office'))) {
       detectedDomain = 'OFFICE_SUPPLIES';
     } else if (detectedCategories.some(c => c.includes('Travel') || c.includes('Flight'))) {
       detectedDomain = 'TRAVEL';
     } else if (detectedCategories.some(c => c.includes('Meals'))) {
-      detectedDomain = 'MEALS_ENTERTAINMENT';
+      detectedDomain = 'MEALS_AND_ENTERTAINMENT';
     }
 
     // Auto-generate clean title

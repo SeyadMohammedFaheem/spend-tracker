@@ -184,7 +184,15 @@ export const EmployeePreSpend: React.FC<EmployeePreSpendProps> = ({
     role: persona.title,
     allowanceLimit: isDeptHead ? 100000 : 50000,
     directManager: isDeptHead ? 'Vikram Malhotra' : 'Priya Mehta'
-  } : EMPLOYEES_MOCK[0];
+  } : {
+    id: EMPLOYEES_MOCK[0].id,
+    name: EMPLOYEES_MOCK[0].name,
+    email: 'priya.sharma@company.com',
+    department: EMPLOYEES_MOCK[0].department,
+    role: EMPLOYEES_MOCK[0].role,
+    allowanceLimit: 50000,
+    directManager: 'Priya Mehta'
+  };
 
   // Evaluate spend live against policies
   const evaluateSpend = (): SpendCheckResult => {
