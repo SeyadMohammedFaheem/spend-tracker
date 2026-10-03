@@ -58,60 +58,183 @@ export const BrokenRoutes: React.FC<BrokenRoutesProps> = ({
         const isHealed = healedRoutes.includes(route.id);
 
         return (
-          <div key={route.id} className="main-table-card" style={{ marginBottom: 24 }}>
+          <div 
+            key={route.id} 
+            className="main-table-card" 
+            style={{ 
+              marginBottom: 24, 
+              backgroundColor: '#FFFFFF',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-md)',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.03)'
+            }}
+          >
             {/* Header */}
-            <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--border)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ 
-                  width: 44, height: 44, borderRadius: '50%', 
-                  background: isHealed ? '#f0fdf4' : '#fef2f2', 
-                  display: 'flex', alignItems: 'center', justifyContent: 'center' 
+            <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--border-subtle)', background: '#FFFFFF' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                  <div style={{ 
+                    width: 42, 
+                    height: 42, 
+                    borderRadius: 'var(--radius-sm)', 
+                    background: isHealed ? 'var(--status-emerald-bg)' : 'var(--status-rose-bg)', 
+                    border: `1px solid ${isHealed ? 'var(--status-emerald-border)' : 'var(--status-rose-border)'}`,
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}>
+                    {isHealed 
+                      ? <CheckCircle2 size={20} color="var(--status-emerald-text)" /> 
+                      : <Link2Off size={20} color="var(--status-rose-text)" />
+                    }
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '1rem', letterSpacing: '-0.01em' }}>
+                      {isHealed ? 'Route Restored & Auto-Healed' : 'Broken Approval Route'}
+                    </div>
+                    <div style={{ fontSize: '0.84rem', color: 'var(--text-muted)', marginTop: 2 }}>
+                      <strong style={{ color: 'var(--text-primary)' }}>{route.personName}</strong> is no longer available. Left the company on {route.since}.
+                    </div>
+                  </div>
+                </div>
+
+                <span style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  padding: '4px 10px',
+                  borderRadius: 'var(--radius-xs)',
+                  background: isHealed ? 'var(--status-emerald-bg)' : 'var(--status-rose-bg)',
+                  color: isHealed ? 'var(--status-emerald-text)' : 'var(--status-rose-text)',
+                  border: `1px solid ${isHealed ? 'var(--status-emerald-border)' : 'var(--status-rose-border)'}`,
+                  whiteSpace: 'nowrap'
                 }}>
-                  {isHealed 
-                    ? <CheckCircle2 size={22} color="#22c55e" /> 
-                    : <Link2Off size={22} color="#dc2626" />
-                  }
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '1.05rem' }}>
-                    {isHealed ? 'ROUTE HEALED' : 'BROKEN APPROVAL ROUTE'}
-                  </div>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                    <strong>{route.personName}</strong> is no longer an active employee. 
-                    {' '}{route.since}
-                  </div>
-                </div>
-                <span className={isHealed ? 'badge-clean-approved' : 'badge-danger'}>
                   {getIssueLabel(route.issue)}
                 </span>
               </div>
             </div>
 
-            {/* Impact */}
-            <div style={{ padding: '16px 24px', borderBottom: '1px solid var(--border)', background: 'var(--bg-secondary)' }}>
-              <div className="impact-stats-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-                <div className="impact-stat">
-                  <div className="impact-stat-number" style={{ color: '#dc2626' }}>{route.affectedRulesCount}</div>
-                  <div className="impact-stat-label">Active rules reference this approver</div>
+            {/* Impact Metric Strip */}
+            <div style={{
+              padding: '16px 24px',
+              borderBottom: '1px solid var(--border-subtle)',
+              background: 'var(--bg-subtle)'
+            }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: 14
+              }}>
+                <div style={{
+                  background: '#FFFFFF',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-sm)',
+                  padding: '12px 16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4
+                }}>
+                  <div style={{
+                    fontSize: '1.45rem',
+                    fontWeight: 700,
+                    fontFamily: 'var(--font-mono)',
+                    color: 'var(--status-rose-text)',
+                    lineHeight: 1
+                  }}>
+                    {route.affectedRulesCount}
+                  </div>
+                  <div style={{
+                    fontSize: '0.72rem',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.04em',
+                    color: 'var(--text-muted)'
+                  }}>
+                    Active rules reference this approver
+                  </div>
                 </div>
-                <div className="impact-stat">
-                  <div className="impact-stat-number" style={{ color: '#f59e0b' }}>{route.affectedPendingRequests}</div>
-                  <div className="impact-stat-label">Pending requests stuck</div>
+
+                <div style={{
+                  background: '#FFFFFF',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-sm)',
+                  padding: '12px 16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4
+                }}>
+                  <div style={{
+                    fontSize: '1.45rem',
+                    fontWeight: 700,
+                    fontFamily: 'var(--font-mono)',
+                    color: 'var(--status-amber-text)',
+                    lineHeight: 1
+                  }}>
+                    {route.affectedPendingRequests}
+                  </div>
+                  <div style={{
+                    fontSize: '0.72rem',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.04em',
+                    color: 'var(--text-muted)'
+                  }}>
+                    Pending requests stuck in queue
+                  </div>
                 </div>
-                <div className="impact-stat">
-                  <div className="impact-stat-number">{route.ruleCode}</div>
-                  <div className="impact-stat-label">Primary affected policy</div>
+
+                <div style={{
+                  background: '#FFFFFF',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-sm)',
+                  padding: '12px 16px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4
+                }}>
+                  <div style={{
+                    fontSize: '1.2rem',
+                    fontWeight: 700,
+                    fontFamily: 'var(--font-mono)',
+                    color: 'var(--text-primary)',
+                    lineHeight: 1.2
+                  }}>
+                    {route.ruleCode}
+                  </div>
+                  <div style={{
+                    fontSize: '0.72rem',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.04em',
+                    color: 'var(--text-muted)'
+                  }}>
+                    Primary affected spend policy
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Replacement Options (Section 19) */}
+            {/* Replacement Options */}
             {!isHealed && (
-              <div style={{ padding: '20px 24px' }}>
-                <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.88rem', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <Users size={16} color="var(--brand-primary)" />
-                  <span>Replace with:</span>
+              <div style={{ padding: '20px 24px', background: '#FFFFFF' }}>
+                <div style={{
+                  fontWeight: 700,
+                  color: 'var(--text-primary)',
+                  fontSize: '0.84rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  marginBottom: 12,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8
+                }}>
+                  <Users size={15} color="var(--brand-primary)" />
+                  <span>Select Replacement Approver</span>
                 </div>
+
                 <div className="resolution-options">
                   {route.replacementOptions.map((opt, i) => {
                     const isSelected = selectedReplacement[route.id] === opt.name;
@@ -159,15 +282,36 @@ export const BrokenRoutes: React.FC<BrokenRoutesProps> = ({
                   })}
                 </div>
 
-                <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 18 }}>
                   <button 
                     className="btn-create-rule"
                     disabled={!selectedReplacement[route.id]}
                     onClick={() => handleHeal(route.id)}
+                    style={{
+                      padding: '9px 18px',
+                      fontSize: '0.86rem',
+                      fontWeight: 600,
+                      borderRadius: 'var(--radius-sm)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 7,
+                      cursor: !selectedReplacement[route.id] ? 'not-allowed' : 'pointer',
+                      opacity: !selectedReplacement[route.id] ? 0.6 : 1
+                    }}
                   >
-                    Assign Replacement
+                    <CheckCircle2 size={15} />
+                    <span>Assign Replacement</span>
                   </button>
-                  <button className="btn-outline" onClick={() => onNavigateTab('landscape')}>
+                  <button 
+                    className="btn-outline" 
+                    onClick={() => onNavigateTab('landscape')}
+                    style={{
+                      padding: '9px 16px',
+                      fontSize: '0.86rem',
+                      fontWeight: 600,
+                      borderRadius: 'var(--radius-sm)'
+                    }}
+                  >
                     Review Affected Rules
                   </button>
                 </div>
@@ -175,10 +319,10 @@ export const BrokenRoutes: React.FC<BrokenRoutesProps> = ({
             )}
 
             {isHealed && (
-              <div style={{ padding: '20px 24px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#22c55e', fontWeight: 600 }}>
+              <div style={{ padding: '20px 24px', background: 'var(--status-emerald-bg)', borderTop: '1px solid var(--status-emerald-border)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--status-emerald-text)', fontWeight: 600, fontSize: '0.88rem' }}>
                   <CheckCircle2 size={18} />
-                  Route healed. {selectedReplacement[route.id]} assigned as new approver. Change recorded in audit trail.
+                  <span>Route healed. <strong>{selectedReplacement[route.id]}</strong> assigned as new approver. Recorded in immutable audit trail.</span>
                 </div>
               </div>
             )}
