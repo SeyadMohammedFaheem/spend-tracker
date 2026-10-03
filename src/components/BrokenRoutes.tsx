@@ -108,29 +108,55 @@ export const BrokenRoutes: React.FC<BrokenRoutesProps> = ({
             {/* Replacement Options (Section 19) */}
             {!isHealed && (
               <div style={{ padding: '20px 24px' }}>
-                <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.92rem', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <Users size={16} />
-                  Replace with:
+                <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.88rem', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <Users size={16} color="var(--brand-primary)" />
+                  <span>Replace with:</span>
                 </div>
                 <div className="resolution-options">
-                  {route.replacementOptions.map((opt, i) => (
-                    <label 
-                      key={i} 
-                      className={`resolution-option ${selectedReplacement[route.id] === opt.name ? 'selected' : ''}`}
-                    >
-                      <input 
-                        type="radio"
-                        name={`replacement-${route.id}`}
-                        value={opt.name}
-                        checked={selectedReplacement[route.id] === opt.name}
-                        onChange={() => setSelectedReplacement({ ...selectedReplacement, [route.id]: opt.name })}
-                      />
-                      <div>
-                        <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{opt.name}</div>
-                        <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{opt.role}</div>
-                      </div>
-                    </label>
-                  ))}
+                  {route.replacementOptions.map((opt, i) => {
+                    const isSelected = selectedReplacement[route.id] === opt.name;
+                    const isDynamic = opt.role.toLowerCase().includes('dynamic');
+                    return (
+                      <label 
+                        key={i} 
+                        className={`resolution-option ${isSelected ? 'selected' : ''}`}
+                      >
+                        <input 
+                          type="radio"
+                          name={`replacement-${route.id}`}
+                          value={opt.name}
+                          checked={isSelected}
+                          onChange={() => setSelectedReplacement({ ...selectedReplacement, [route.id]: opt.name })}
+                        />
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+                          <div>
+                            <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.88rem' }}>
+                              {opt.name}
+                            </div>
+                            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: 2 }}>
+                              {opt.role}
+                            </div>
+                          </div>
+                          {isDynamic && (
+                            <span style={{
+                              fontSize: '0.68rem',
+                              fontWeight: 700,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.04em',
+                              padding: '2px 8px',
+                              borderRadius: 'var(--radius-xs)',
+                              backgroundColor: 'var(--status-emerald-bg)',
+                              color: 'var(--status-emerald-text)',
+                              border: '1px solid var(--status-emerald-border)',
+                              whiteSpace: 'nowrap'
+                            }}>
+                              Recommended · Dynamic Role
+                            </span>
+                          )}
+                        </div>
+                      </label>
+                    );
+                  })}
                 </div>
 
                 <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>

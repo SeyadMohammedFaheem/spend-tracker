@@ -1593,3 +1593,44 @@ body {
   padding-top: 12px;
   border-top: 1px dashed var(--border-subtle);
 }
+
+/* ─── Resolution & Replacement Option Cards ─── */
+.resolution-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resolution-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+  user-select: none;
+}
+
+.resolution-option:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border-strong);
+}
+
+.resolution-option.selected {
+  background: var(--brand-surface);
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 1px var(--brand-primary);
+}
+
+.resolution-option input[type="radio"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--brand-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin: 0;
+}
+
